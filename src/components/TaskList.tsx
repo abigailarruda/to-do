@@ -28,30 +28,20 @@ export function TaskList() {
   }
 
   function handleToggleTaskCompletion(id: number) {
-    const foundTask = tasks.find((task) => task.id === id);
-    if (!foundTask) {
-      return;
-    }
-    const indexOfFoundTask = tasks.indexOf(foundTask);
-    if (indexOfFoundTask > -1) {
-      const completeTask = { ...foundTask, isComplete: !foundTask.isComplete };
-      const newTasks = [...tasks];
-      newTasks[indexOfFoundTask] = completeTask;
-      setTasks(newTasks);
-    }
+    const mappedTasks = tasks.map((task) =>
+      task.id === id
+        ? {
+            ...task,
+            isComplete: !task.isComplete,
+          }
+        : task
+    );
+    setTasks(mappedTasks);
   }
 
   function handleRemoveTask(id: number) {
-    const foundTask = tasks.find((task) => task.id === id);
-    if (!foundTask) {
-      return;
-    }
-    const indexOfFoundTask = tasks.indexOf(foundTask);
-    if (indexOfFoundTask > -1) {
-      const removedTask = tasks.splice(indexOfFoundTask, 1);
-      const newTasks = tasks.filter((task) => task !== removedTask[0]);
-      setTasks(newTasks);
-    }
+    const filteredTasks = tasks.filter((task) => task.id !== id);
+    setTasks(filteredTasks);
   }
 
   return (
